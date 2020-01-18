@@ -82,6 +82,7 @@ public class DriverMode extends LinearOpMode {
 
             if (gamepad2.y) {
                 skyGary.Collecta.SIMPLE_MODE = true;
+
 //                if (toggleReleased) {
 //                    skyGary.Collecta.ChangeArmState();
 //

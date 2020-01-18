@@ -33,6 +33,8 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+
 /**
  * This file illustrates the concept of driving a path based on time.
  * It uses the common Pushbot hardware class to define the drive on the robot.
@@ -54,7 +56,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@Autonomous(name="Auto - Turn 90", group="Test")
+@Autonomous(name="Auto - Bridge Detect", group="Test")
 //@Disabled
 public class Auto_DriveStraight extends LinearOpMode {
 
@@ -80,10 +82,19 @@ public class Auto_DriveStraight extends LinearOpMode {
 
         runtime.reset();
         //while (opModeIsActive()) {
-            skyGary.Drive.Turn( this, 90, 5000);
+            //skyGary.Drive.Turn( this, 90, 5000);
             //telemetry.addData("Runtime: ", runtime.seconds());
             //telemetry.update();
         //}
-        sleep(20000);
+        skyGary.Drive.DriveForward(.6);
+        while (opModeIsActive() && runtime.time() < 2) {
+            if (skyGary.mySensors.bridgeSensor.cmUltrasonic() < 50){
+                telemetry.addData("Bridge: ", "DETECTED");
+            } else {
+                telemetry.addData("Bridge: ", "NOT DETECTED");
+            }
+            telemetry.update();
+        }
+        skyGary.Drive.StopWheels();
     }
 }

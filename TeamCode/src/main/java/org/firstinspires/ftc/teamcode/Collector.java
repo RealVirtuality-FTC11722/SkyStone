@@ -22,14 +22,14 @@ public class Collector {
     public Servo Joint = null;
     public CRServo pushInServo = null;
     public boolean SIMPLE_MODE = false;
+    public boolean ARM_DOWN = false;
+    public boolean ARM_UP = true;
 
     double PULL_IN = 1.0;
     double SPIT_OUT = -0.3;
     double DOWN = 0.82;
     double UP = 0;
 
-    boolean ARM_DOWN = false;
-    boolean ARM_UP = true;
 
 
     public Collector(){ //constructor

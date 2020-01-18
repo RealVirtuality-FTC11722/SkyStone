@@ -1,9 +1,11 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cRangeSensor;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.I2cAddr;
 import com.qualcomm.robotcore.util.Range;
 import android.app.Activity;
 import android.graphics.Color;
@@ -21,6 +23,9 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 public class Sensors {
     ColorSensor sensorColor;
     DistanceSensor sensorDistance;
+    ModernRoboticsI2cRangeSensor bridgeSensor;
+    ModernRoboticsI2cRangeSensor blockSensor;
+
     // hsvValues is an array that will hold the hue, saturation, and value information.
     float hsvValues[] = {0F, 0F, 0F};
 
@@ -43,6 +48,9 @@ public class Sensors {
         // get a reference to the distance sensor that shares the same name.
         sensorDistance = myHWMap.get(DistanceSensor.class, "sensorColor");
 
+        bridgeSensor = myHWMap.get(ModernRoboticsI2cRangeSensor.class, "sensorBridge");
+        //blockSensor = myHWMap.get(ModernRoboticsI2cRangeSensor.class, "sensorBlock");
+        //blockSensor.setI2cAddress(I2cAddr.create8bit(0x3a));
 
         // get a reference to the RelativeLayout so we can change the background
         // color of the Robot Controller app to match the hue detected by the RGB sensor.

@@ -49,14 +49,8 @@ public class MecanumDrive {
         motorFR.setDirection(DcMotor.Direction.REVERSE);// Set to FORWARD if using AndyMark motors
         motorBL.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors
         motorBR.setDirection(DcMotor.Direction.REVERSE);// Set to FORWARD if using AndyMark motors
-        motorBL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        motorBL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        motorBR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        motorBR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        motorFL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        motorFL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        motorFR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        motorFR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        DriveMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        DriveMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         // Set up the parameters with which we will use our IMU. Note that integration
         // algorithm here just reports accelerations to the logcat log; it doesn't actually
@@ -266,10 +260,11 @@ public class MecanumDrive {
     public boolean Drive(LinearOpMode op, double power, double distance, double timeout){
         //Reset encoder values so target position is relative to the position the robot
         //was at when the method was called
-        motorBL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        motorBR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        motorBL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        motorBR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+
+        DriveMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        DriveMode(DcMotor.RunMode.RUN_TO_POSITION);
+
         ElapsedTime drivetime = new ElapsedTime();
         boolean successfulness = false;
         double scaleFactor = 83.33; //Convert inches to encoder values
@@ -397,10 +392,7 @@ public class MecanumDrive {
         boolean onTarget = false;
         //motorBL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         //motorBR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        motorBL.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        motorBR.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        motorFL.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        motorFR.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+       DriveMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         op.telemetry.setAutoClear(true);
         while (op.opModeIsActive() && !onTarget) {
             error = getError(angle);
