@@ -90,10 +90,8 @@ public class MecanumDrive {
         motorFR.setDirection(DcMotor.Direction.REVERSE);// Set to FORWARD if using AndyMark motors
         motorBL.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors
         motorBR.setDirection(DcMotor.Direction.REVERSE);// Set to FORWARD if using AndyMark motors
-        motorBL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        motorBL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        motorBR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        motorBR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        DriveMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        DriveMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
     public void initGyro(HardwareMap myHWMap) {
@@ -131,16 +129,20 @@ public class MecanumDrive {
         motorBR.setDirection(DcMotor.Direction.REVERSE);// Set to FORWARD if using AndyMark motors
     }
 
+    public void DriveMode(DcMotor.RunMode JoeMode) {
+        motorFL.setMode(JoeMode);
+        motorFR.setMode(JoeMode);
+        motorBL.setMode(JoeMode);
+        motorBR.setMode(JoeMode);
+    }
+
     /**Method for manual control of drive system
      yStick controls forward and backward motion
      xStick controls lateral motion (strafe)
      turnStick control rotation (turn)
      Trigger controls the throttle (speed) */
     public void DriveControl(double yStick, double xStick, double turnStick, double trigger){
-        motorFL.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        motorFR.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        motorBL.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        motorBR.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        DriveMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         double r = Math.hypot(xStick, yStick);
         double robotAngle = Math.atan2(-yStick, xStick) - Math.PI / 4;
         //Set minimum throttle value so the trigger does not need to be pressed to drive
@@ -172,10 +174,7 @@ public class MecanumDrive {
         }
     }
     public void DriveForward(double power) {
-        motorFR.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        motorFL.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        motorBR.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        motorBL.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        DriveMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         motorBL.setPower(power);
         motorBR.setPower(power);
         motorFL.setPower(power);
@@ -183,20 +182,14 @@ public class MecanumDrive {
     }
 
     public void DriveLeft(double power) {
-        motorFR.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        motorFL.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        motorBR.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        motorBL.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        DriveMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         motorBL.setPower(power);
         motorBR.setPower(-power);
         motorFL.setPower(-power);
         motorFR.setPower(power);
     }
     public void DriveLeftWithGyro(double power, LinearOpMode op, double time) {
-        motorFR.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        motorFL.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        motorBR.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        motorBL.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        DriveMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         ElapsedTime runtime = new ElapsedTime();
         runtime.reset();
         DriveLeft( 0.4);
@@ -211,10 +204,7 @@ public class MecanumDrive {
         }
     }
     public void DriveRightWithGyro(double power, LinearOpMode op, double time) {
-        motorFR.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        motorFL.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        motorBR.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        motorBL.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        DriveMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         ElapsedTime runtime = new ElapsedTime();
         runtime.reset();
         DriveRight( 0.4);
@@ -239,10 +229,7 @@ public class MecanumDrive {
     }
 
     public void DriveRight(double power) {
-        motorFR.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        motorFL.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        motorBR.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        motorBL.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        DriveMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         motorBL.setPower(-power);
         motorBR.setPower(power);
         motorFL.setPower(power);
@@ -250,10 +237,7 @@ public class MecanumDrive {
     }
 
     public void DriveBackwards(double power) {
-        motorFR.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        motorFL.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        motorBR.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        motorBL.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        DriveMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         motorBL.setPower(-power);
         motorBR.setPower(-power);
         motorFL.setPower(-power);
