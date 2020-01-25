@@ -51,9 +51,8 @@ public class DriverMode extends LinearOpMode {
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
         runtime.reset();
-        //indianaGary.myRelicArm.relicGrab.setPosition(indianaGary.myRelicArm.RELIC_GRAB_OPEN);
 
-
+        skyGary.Builda.LifterExpand("out");
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
             telemetry.addData("Status", "Run Time: " + runtime.toString());
@@ -91,12 +90,18 @@ public class DriverMode extends LinearOpMode {
 //            } else {
 //                toggleReleased = true;
             }
+            //skyGary.Builda.GrabPlatform(BotControls.PlatformGrabButton(this));
+            skyGary.Builda.FoundationGrabberB.setPosition(gamepad1.right_trigger);
+            skyGary.Builda.FoundationGrabberA.setPosition(gamepad1.right_trigger);
+            telemetry.addData("Plstform Servos: ", gamepad1.right_trigger);
 
-            skyGary.Builda.BuilderControl(this,
-                    BotControls.PlateStick(this) / 2,
+            skyGary.Builda.LifterControl(
                     BotControls.LifterStick(this),
                     BotControls.ClampButton(this)
+
             );
+
+            skyGary.Builda.MovePlate(BotControls.PlateStick(this) / 2);
 
             telemetry.addData("FR Wheel: ", skyGary.Drive.motorFR.getPower());
             telemetry.addData("FL Wheel: ", skyGary.Drive.motorFL.getPower());

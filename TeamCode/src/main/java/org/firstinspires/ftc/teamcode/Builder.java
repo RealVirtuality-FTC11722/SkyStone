@@ -15,20 +15,23 @@ import com.qualcomm.robotcore.util.Range;
  */
 
 public class Builder {
-    public DcMotor motorLifter = null;
+    public DcMotor liftUpDown = null;
+    public DcMotor liftInOut = null;
+    public Servo liftClamp = null;
     public CRServo plateServo = null;
     public Servo kickOutServo = null;
     public boolean onState = false;
-    public Servo liftClamp = null;
     //public Servo ShifterServo = null;
     public Servo FoundationGrabberA;
     public Servo FoundationGrabberB;
 
-    double GRAB = 0.6;
-    double RELEASE = 0.3;
+    double GRAB_POSITION = 0.7;
+    double RELEASE_POSITION = 0.5;
     double CLAMP_OPEN = 0;
     double CLAMP_CLOSED = 0.5;
     double LIFTER_SPEED_MAX = 0.8;
+    int IN_POSITION = 0;
+    int OUT_POSITION = 500;
 
 
     public Builder(){ //constructor
@@ -37,9 +40,10 @@ public class Builder {
     public void init(HardwareMap myHWMap){
 
         //Initialize wheel motors
-        motorLifter = myHWMap.get(DcMotor.class, "motorLifter");
+        liftUpDown = myHWMap.get(DcMotor.class, "motorLiftUpDown");
+        liftInOut = myHWMap.get(DcMotor.class, "motorLiftInOut");
+        liftClamp = myHWMap.get(Servo.class, "servoLiftClampTop");
         plateServo  = myHWMap.get(CRServo.class, "servoPlate"); //was "servoPaddle"
-        liftClamp = myHWMap.get(Servo.class, "servoLiftClamp");
         kickOutServo = myHWMap.get(Servo.class, "servoKickOut");
         FoundationGrabberA = myHWMap.get(Servo.class, "FoundationGrabberA");
         FoundationGrabberB = myHWMap.get(Servo.class, "FoundationGrabberB");
@@ -48,18 +52,45 @@ public class Builder {
         // eg: Set the drive motor directions:
         // "Reverse" the motor that runs backwards when connected directly to the battery
 
-        motorLifter.setDirection(DcMotorSimple.Direction.REVERSE);
+        liftUpDown.setDirection(DcMotorSimple.Direction.REVERSE);
+        liftInOut.setDirection(DcMotorSimple.Direction.REVERSE);
+        liftClamp.setDirection(Servo.Direction.FORWARD);
         plateServo.setDirection(CRServo.Direction.REVERSE);
         FoundationGrabberA.setDirection(Servo.Direction.FORWARD);
-        FoundationGrabberB.setDirection(Servo.Direction.FORWARD);
+        FoundationGrabberB.setDirection(Servo.Direction.REVERSE);
+
+        liftInOut.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        liftInOut.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         plateServo.setPower(0);
     }
 
 
-    public void BuilderControl(LinearOpMode op, double joeStick, double liftStick, double clampTrigger) {
-        plateServo.setPower(joeStick);
-        motorLifter.setPower(Range.clip(liftStick, -LIFTER_SPEED_MAX, LIFTER_SPEED_MAX));
+    public void LifterControl(double liftStick, double clampTrigger) {
+        liftUpDown.setPower(Range.clip(liftStick, -LIFTER_SPEED_MAX, LIFTER_SPEED_MAX));
         liftClamp.setPosition(Range.clip(clampTrigger, CLAMP_OPEN, CLAMP_CLOSED));
+    }
+
+    public void LifterExpand(String state) {
+        liftInOut.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        if (state == "in") {
+            liftInOut.setTargetPosition(IN_POSITION);
+        } else if (state == "out") {
+            liftInOut.setTargetPosition(OUT_POSITION);
+        }
+    }
+
+    public void MovePlate(double plateStick) {
+        plateServo.setPower(plateStick);
+    }
+
+    public void GrabPlatform(boolean GrabButton) {
+        if (GrabButton) {
+            FoundationGrabberB.setPosition(GRAB_POSITION);
+            FoundationGrabberA.setPosition(GRAB_POSITION);
+        } else {
+            FoundationGrabberA.setPosition(RELEASE_POSITION);
+            FoundationGrabberB.setPosition(RELEASE_POSITION);
+        }
     }
 
     public void BuilderControl (LinearOpMode op, boolean ShifterP, boolean ShifterN) {

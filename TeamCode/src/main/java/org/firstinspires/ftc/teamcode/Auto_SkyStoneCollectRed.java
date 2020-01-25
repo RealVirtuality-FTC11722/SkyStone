@@ -58,9 +58,9 @@ import java.util.Locale;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@Autonomous(name="AutoRed - Collect Skystones", group="Auto")
+@Autonomous(name="AutoRed - Collect Skystones", group="Red")
 //@Disabled
-public class Auto_RedSkyStoneCollect extends LinearOpMode {
+public class Auto_SkyStoneCollectRed extends LinearOpMode {
 
     /* Declare OpMode members. */
     private ElapsedTime runtime = new ElapsedTime();
@@ -147,8 +147,10 @@ public class Auto_RedSkyStoneCollect extends LinearOpMode {
             //Drive Forward to next Skystone
             skyGary.Drive.DriveBackwards(0.500000000456456);
             loopStartTime = runtime.time();
-            while (opModeIsActive() && runtime.time() < 1 + loopStartTime) {
-                //do nothing
+            while (opModeIsActive() && runtime.time() < 2 + loopStartTime) {
+                if (skyGary.mySensors.bridgeSensor.cmUltrasonic() < 50){
+                    skyGary.Drive.StopWheels();
+                }
             }
             skyGary.Drive.StopWheels();
             //Drive Right to stones

@@ -31,7 +31,6 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 /**
@@ -55,9 +54,9 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@Autonomous(name="Auto - Straff Straight", group="Test")
+@Autonomous(name="AutoBlue - Park On Line", group="Blue")
 //@Disabled
-public class Auto_StraffStraight extends LinearOpMode {
+public class Auto_ParkOnLineBlue extends LinearOpMode {
 
     /* Declare OpMode members. */
     private ElapsedTime runtime = new ElapsedTime();
@@ -67,11 +66,13 @@ public class Auto_StraffStraight extends LinearOpMode {
 
     @Override
     public void runOpMode() {
+        double loopStartTime;
         telemetry.addData("Status", "Initialized");
         telemetry.update();
 
         //Use the Teleop initialization method
         skyGary.InitAuto(hardwareMap);
+        AutoTransitioner.transitionOnStop(this, "Driver Mode - Only");
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
@@ -80,19 +81,18 @@ public class Auto_StraffStraight extends LinearOpMode {
 
         runtime.reset();
         //while (opModeIsActive()) {
-            skyGary.Drive.DriveLeft( 0.4);
-            sleep(500);
-            skyGary.Drive.DriveLeft( 0.6);
-            sleep(500);
-            skyGary.Drive.DriveLeft( 0.8);
-            while (opModeIsActive()) {
-                telemetry.addData("Direction: ", skyGary.Drive.imu.getAngularOrientation().firstAngle);
-                skyGary.Drive.KeepStraight();
-                telemetry.update();
+        skyGary.Drive.DriveLeftWithGyro(0.8, this, 2.0);
+        skyGary.Drive.StopWheels();
+        skyGary.Drive.DriveForward(0.500000000456456);
+        loopStartTime = runtime.time();
+        while (opModeIsActive() && runtime.time() < 3 + loopStartTime) {
+            if (skyGary.mySensors.bridgeSensor.cmUltrasonic() < 50){
+                skyGary.Drive.StopWheels();
             }
-            skyGary.Drive.StopWheels();
-            telemetry.addData("Runtime: ", runtime.seconds());
-            telemetry.update();
+        }
+        skyGary.Drive.StopWheels();
+
+
         //}
 
     }

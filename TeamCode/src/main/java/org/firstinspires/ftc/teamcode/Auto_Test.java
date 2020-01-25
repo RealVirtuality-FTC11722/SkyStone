@@ -33,6 +33,8 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+
 /**
  * This file illustrates the concept of driving a path based on time.
  * It uses the common Pushbot hardware class to define the drive on the robot.
@@ -54,9 +56,9 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@Autonomous(name="Auto - Park On Line Right", group="Auto")
+@Autonomous(name="AutoTest - Move Platform", group="Test")
 //@Disabled
-public class Auto_ParkOnLineRight extends LinearOpMode {
+public class Auto_Test extends LinearOpMode {
 
     /* Declare OpMode members. */
     private ElapsedTime runtime = new ElapsedTime();
@@ -66,12 +68,12 @@ public class Auto_ParkOnLineRight extends LinearOpMode {
 
     @Override
     public void runOpMode() {
+        telemetry.setAutoClear(false);
         telemetry.addData("Status", "Initialized");
         telemetry.update();
 
         //Use the Teleop initialization method
         skyGary.InitAuto(hardwareMap);
-        AutoTransitioner.transitionOnStop(this, "Driver Mode - Only");
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
@@ -80,15 +82,23 @@ public class Auto_ParkOnLineRight extends LinearOpMode {
 
         runtime.reset();
         //while (opModeIsActive()) {
-            skyGary.Drive.DriveForward( 0.4);
-            this.sleep(2000);
-            skyGary.Drive.StopWheels();
-            skyGary.Drive.DriveRight( 0.4);
-            this.sleep(2900);
-            skyGary.Drive.StopWheels();
-            telemetry.addData("Runtime: ", runtime.seconds());
-            telemetry.update();
+            //skyGary.Drive.Turn( this, 90, 5000);
+            //telemetry.addData("Runtime: ", runtime.seconds());
+            //telemetry.update();
         //}
+        skyGary.Drive.DriveLeft(.5);
+        while (opModeIsActive() && runtime.time() < 3) {
+            skyGary.Drive.KeepStraight();
+            telemetry.update();
+        }
+        skyGary.Drive.StopWheels();
+        skyGary.Builda.GrabPlatform(true);
+
+        skyGary.Drive.DriveRight(.5);
+        while (opModeIsActive() && runtime.time() < 2) {
+            skyGary.Drive.KeepStraight();
+            telemetry.update();
+        }
 
     }
 }

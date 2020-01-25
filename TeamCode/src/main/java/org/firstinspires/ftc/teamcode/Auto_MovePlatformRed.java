@@ -33,8 +33,6 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
-
 /**
  * This file illustrates the concept of driving a path based on time.
  * It uses the common Pushbot hardware class to define the drive on the robot.
@@ -56,9 +54,9 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@Autonomous(name="Auto - Bridge Detect", group="Test")
+@Autonomous(name="AutoRed - Move Platform", group="Red")
 //@Disabled
-public class Auto_DriveStraight extends LinearOpMode {
+public class Auto_MovePlatformRed extends LinearOpMode {
 
     /* Declare OpMode members. */
     private ElapsedTime runtime = new ElapsedTime();
@@ -68,12 +66,13 @@ public class Auto_DriveStraight extends LinearOpMode {
 
     @Override
     public void runOpMode() {
-        telemetry.setAutoClear(false);
+        double loopStartTime;
         telemetry.addData("Status", "Initialized");
         telemetry.update();
 
         //Use the Teleop initialization method
         skyGary.InitAuto(hardwareMap);
+        AutoTransitioner.transitionOnStop(this, "Driver Mode - Only");
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
@@ -82,19 +81,29 @@ public class Auto_DriveStraight extends LinearOpMode {
 
         runtime.reset();
         //while (opModeIsActive()) {
-            //skyGary.Drive.Turn( this, 90, 5000);
-            //telemetry.addData("Runtime: ", runtime.seconds());
-            //telemetry.update();
-        //}
-        skyGary.Drive.DriveForward(.6);
-        while (opModeIsActive() && runtime.time() < 2) {
-            if (skyGary.mySensors.bridgeSensor.cmUltrasonic() < 50){
-                telemetry.addData("Bridge: ", "DETECTED");
-            } else {
-                telemetry.addData("Bridge: ", "NOT DETECTED");
-            }
-            telemetry.update();
+        skyGary.Drive.DriveLeftWithGyro(0.8, this, 3);
+        skyGary.Drive.StopWheels();
+        skyGary.Builda.GrabPlatform(true);
+        sleep(500);
+        skyGary.Drive.DriveRight(0.5);
+        loopStartTime = runtime.time();
+        while (opModeIsActive() && runtime.time() < loopStartTime + 2) {
+            skyGary.Drive.KeepStraight();
         }
         skyGary.Drive.StopWheels();
+        skyGary.Builda.GrabPlatform(false);
+        sleep(500);
+        skyGary.Drive.DriveBackwards(0.500000000456456);
+        loopStartTime = runtime.time();
+        while (opModeIsActive() && runtime.time() < 3 + loopStartTime) {
+            if (skyGary.mySensors.bridgeSensor.cmUltrasonic() < 50){
+                skyGary.Drive.StopWheels();
+            }
+        }
+        skyGary.Drive.StopWheels();
+
+
+        //}
+
     }
 }

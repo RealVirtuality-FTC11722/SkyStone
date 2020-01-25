@@ -54,9 +54,9 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@Autonomous(name="Auto - Park On Line Left", group="Auto")
+@Autonomous(name="AutoRed - Park On Line", group="Red")
 //@Disabled
-public class Auto_ParkOnLineLeft extends LinearOpMode {
+public class Auto_ParkOnLineRed extends LinearOpMode {
 
     /* Declare OpMode members. */
     private ElapsedTime runtime = new ElapsedTime();
@@ -66,6 +66,7 @@ public class Auto_ParkOnLineLeft extends LinearOpMode {
 
     @Override
     public void runOpMode() {
+        double loopStartTime;
         telemetry.addData("Status", "Initialized");
         telemetry.update();
 
@@ -80,14 +81,18 @@ public class Auto_ParkOnLineLeft extends LinearOpMode {
 
         runtime.reset();
         //while (opModeIsActive()) {
-            skyGary.Drive.DriveForward(0.4);
-            this.sleep(2000);
-            skyGary.Drive.StopWheels();
-            skyGary.Drive.DriveLeft( 0.4);
-            this.sleep(2900);
-            skyGary.Drive.StopWheels();
-            telemetry.addData("Runtime: ", runtime.seconds());
-            telemetry.update();
+        skyGary.Drive.DriveLeftWithGyro(0.8, this, 2.0);
+        skyGary.Drive.StopWheels();
+        skyGary.Drive.DriveBackwards(0.500000000456456);
+        loopStartTime = runtime.time();
+        while (opModeIsActive() && runtime.time() < 3 + loopStartTime) {
+            if (skyGary.mySensors.bridgeSensor.cmUltrasonic() < 50){
+                skyGary.Drive.StopWheels();
+            }
+        }
+        skyGary.Drive.StopWheels();
+
+
         //}
 
     }

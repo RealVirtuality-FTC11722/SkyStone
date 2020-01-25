@@ -21,7 +21,13 @@ public class BotControls {
     public static double  DriveThrottle(LinearOpMode op)            {return op.gamepad1.right_trigger;}
 
     //Build Platform Grabber
-    public static double  PlatformGrabTrigger(LinearOpMode op)      {return op.gamepad1.right_trigger; }
+    public static boolean PlatformGrabButton(LinearOpMode op)      {
+        if (op.gamepad1.right_trigger > 0.5) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     //Parking Scorer
     public static boolean ParkTrigger(LinearOpMode op)              {return op.gamepad1.right_bumper;}
