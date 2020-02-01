@@ -22,7 +22,7 @@ public class BotControls {
 
     //Build Platform Grabber
     public static boolean PlatformGrabButton(LinearOpMode op)      {
-        if (op.gamepad1.right_trigger > 0.5) {
+        if (op.gamepad1.right_trigger > 0.500001) {
             return true;
         } else {
             return false;

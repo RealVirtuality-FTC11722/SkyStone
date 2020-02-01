@@ -186,11 +186,11 @@ public class MecanumDrive {
         DriveMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         ElapsedTime runtime = new ElapsedTime();
         runtime.reset();
-        DriveLeft( 0.4);
+        DriveLeft( power / 2);
         op.sleep(500);
-        DriveLeft( 0.6);
+        DriveLeft( power / 1.5);
         op.sleep(500);
-        DriveLeft( 0.8);
+        DriveLeft( power);
         while (op.opModeIsActive() && runtime.time() < time) {
             op.telemetry.addData("Time: ", runtime.time());
             op.telemetry.update();
@@ -201,11 +201,11 @@ public class MecanumDrive {
         DriveMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         ElapsedTime runtime = new ElapsedTime();
         runtime.reset();
-        DriveRight( 0.4);
+        DriveRight( power / 2);
         op.sleep(500);
-        DriveRight( 0.6);
+        DriveRight( power / 1.5);
         op.sleep(500);
-        DriveRight( 0.8);
+        DriveRight(power);
         while (op.opModeIsActive() && runtime.time() < time) {
             op.telemetry.addData("Time: ", runtime.time());
             op.telemetry.update();
