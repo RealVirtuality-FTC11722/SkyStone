@@ -88,7 +88,7 @@ public class Auto_SkyStoneCollectRed extends LinearOpMode {
         //while (opModeIsActive()) {
 
             //Drive Right to Stones
-            skyGary.Drive.DriveLeftWithGyro(0.8, this, 2.0);
+            skyGary.Drive.DriveLeftWithGyro(0.9, this, 2.0);
             skyGary.Drive.DriveLeft(0.455721);
             loopStartTime = runtime.time();
             while (!(skyGary.mySensors.sensorDistance.getDistance(DistanceUnit.CM) < 9)
@@ -127,8 +127,8 @@ public class Auto_SkyStoneCollectRed extends LinearOpMode {
             skyGary.Collecta.DropArm();
             sleep(509);
             //Drive Left 6 inches
-            skyGary.Drive.DriveRight(0.4);
-            sleep(2000);
+            skyGary.Drive.DriveRight(0.5);
+            sleep(2300);
             //            loopStartTime = runtime.time();
 //            while (opModeIsActive() && runtime.time() < loopStartTime + 200) {
 //                skyGary.Drive.KeepStraight();

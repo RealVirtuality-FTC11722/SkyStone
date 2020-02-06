@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 
@@ -52,8 +53,12 @@ public class DriverMode extends LinearOpMode {
         waitForStart();
         runtime.reset();
 
-        skyGary.Builda.LifterExpand("out");
-        // run until the end of the match (driver presses STOP)
+        //skyGary.Builda.LifterExpand("out", this);
+        skyGary.Builda.liftInOut.setTargetPosition(2400);
+        skyGary.Builda.liftInOut.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        skyGary.Builda.liftInOut.setPower(0.5);
+
+    // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
             telemetry.addData("Status", "Run Time: " + runtime.toString());
 
@@ -90,9 +95,9 @@ public class DriverMode extends LinearOpMode {
 //            } else {
 //                toggleReleased = true;
             }
-            //skyGary.Builda.GrabPlatform(BotControls.PlatformGrabButton(this));
-            skyGary.Builda.FoundationGrabberB.setPosition(gamepad1.right_trigger);
-            skyGary.Builda.FoundationGrabberA.setPosition(gamepad1.right_trigger);
+            skyGary.Builda.GrabPlatform(BotControls.PlatformGrabButton(this));
+            //skyGary.Builda.FoundationGrabberB.setPosition(gamepad1.right_trigger);
+            //skyGary.Builda.FoundationGrabberA.setPosition(gamepad1.right_trigger);
             telemetry.addData("Plstform Servos: ", gamepad1.right_trigger);
 
             skyGary.Builda.LifterControl(

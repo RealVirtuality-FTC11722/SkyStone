@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -25,13 +26,13 @@ public class Builder {
     public Servo FoundationGrabberA;
     public Servo FoundationGrabberB;
 
-    double GRAB_POSITION = 0.7;
+    double GRAB_POSITION = 0.82;
     double RELEASE_POSITION = 0.5;
     double CLAMP_OPEN = 0;
-    double CLAMP_CLOSED = 0.5;
+    double CLAMP_CLOSED = 1.0;
     double LIFTER_SPEED_MAX = 0.8;
     int IN_POSITION = 0;
-    int OUT_POSITION = 500;
+    int OUT_POSITION = 2400;
 
 
     public Builder(){ //constructor
@@ -42,7 +43,7 @@ public class Builder {
         //Initialize wheel motors
         liftUpDown = myHWMap.get(DcMotor.class, "motorLiftUpDown");
         liftInOut = myHWMap.get(DcMotor.class, "motorLiftInOut");
-        liftClamp = myHWMap.get(Servo.class, "servoLiftClampTop");
+        liftClamp = myHWMap.get(Servo.class, "servoLiftClamp");
         plateServo  = myHWMap.get(CRServo.class, "servoPlate"); //was "servoPaddle"
         kickOutServo = myHWMap.get(Servo.class, "servoKickOut");
         FoundationGrabberA = myHWMap.get(Servo.class, "FoundationGrabberA");
@@ -55,10 +56,10 @@ public class Builder {
         liftUpDown.setDirection(DcMotorSimple.Direction.REVERSE);
         liftInOut.setDirection(DcMotorSimple.Direction.REVERSE);
         liftClamp.setDirection(Servo.Direction.FORWARD);
-        plateServo.setDirection(CRServo.Direction.REVERSE);
+        plateServo.setDirection(CRServo.Direction.FORWARD);
         FoundationGrabberA.setDirection(Servo.Direction.FORWARD);
         FoundationGrabberB.setDirection(Servo.Direction.REVERSE);
-
+        kickOutServo.setDirection(Servo.Direction.REVERSE);
         liftInOut.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         liftInOut.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         plateServo.setPower(0);
@@ -70,13 +71,14 @@ public class Builder {
         liftClamp.setPosition(Range.clip(clampTrigger, CLAMP_OPEN, CLAMP_CLOSED));
     }
 
-    public void LifterExpand(String state) {
-        liftInOut.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+    public void LifterExpand(String state, OpMode op) {
         if (state == "in") {
             liftInOut.setTargetPosition(IN_POSITION);
         } else if (state == "out") {
             liftInOut.setTargetPosition(OUT_POSITION);
         }
+        liftInOut.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        liftInOut.setPower(0.5);
     }
 
     public void MovePlate(double plateStick) {

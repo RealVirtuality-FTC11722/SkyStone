@@ -24,7 +24,7 @@ public class MecanumDrive {
 
     public static double STEERING = 0.004;
     public static double Turn_Power = 0.15;
-    double DRIVE_POWER_MAX_LOW = 0.3; //Maximum drive power without throttle
+    double DRIVE_POWER_MAX_LOW = 0.4; //Minimum drive power without throttle
     double TURN_POWER_MIN = 0.17; //Minumun turn power
     static final double     HEADING_THRESHOLD       = 1 ;      // As tight as we can make it with an integer gyro
     static final double     P_TURN_COEFF            = 0.1;     // Larger is more responsive, but also less stable
@@ -140,7 +140,7 @@ public class MecanumDrive {
         double r = Math.hypot(xStick, yStick);
         double robotAngle = Math.atan2(-yStick, xStick) - Math.PI / 4;
         //Set minimum throttle value so the trigger does not need to be pressed to drive
-        double throttle = 0.5 + trigger/2;
+        double throttle = 1 - trigger/2;
         //double throttle = trigger * (1-DRIVE_POWER_MAX_LOW) + DRIVE_POWER_MAX_LOW;
         //Cube the value of turnStick so there's more control over low turn speeds
         double rightX = turnStick; //Math.pow(turnStick, 3);
