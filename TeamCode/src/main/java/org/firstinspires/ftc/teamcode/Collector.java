@@ -27,10 +27,10 @@ public class Collector {
 
     double PULL_IN = 1.0;
     double SPIT_OUT = -0.3;
-    double DOWN = 0.82;
+    double DOWN = 0.62;
     double UP = 0;
 
-
+//please send help i am tired
 
     public Collector(){ //constructor
     }

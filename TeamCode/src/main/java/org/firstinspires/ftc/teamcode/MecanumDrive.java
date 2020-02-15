@@ -21,7 +21,7 @@ public class MecanumDrive {
     public DcMotor motorBL = null;
     public DcMotor motorBR = null;
 
-
+    public double JimtheMotorWeightDistrobutionHelpingNumber = 0.88;
     public static double STEERING = 0.004;
     public static double Turn_Power = 0.15;
     double DRIVE_POWER_MAX_LOW = 0.4; //Minimum drive power without throttle
@@ -37,18 +37,8 @@ public class MecanumDrive {
 
     public void initAuto(HardwareMap myHWMap){
 
-        //Initialize wheel motors
-        motorFL  = myHWMap.get(DcMotor.class, "motorFL");
-        motorFR  = myHWMap.get(DcMotor.class, "motorFR");
-        motorBL  = myHWMap.get(DcMotor.class, "motorBL");
-        motorBR  = myHWMap.get(DcMotor.class, "motorBR");
+        initMotors(myHWMap);
 
-        // eg: Set the drive motor directions:
-        // "Reverse" the motor that runs backwards when connected directly to the battery
-        motorFL.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors
-        motorFR.setDirection(DcMotor.Direction.REVERSE);// Set to FORWARD if using AndyMark motors
-        motorBL.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors
-        motorBR.setDirection(DcMotor.Direction.REVERSE);// Set to FORWARD if using AndyMark motors
         DriveMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         DriveMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
@@ -80,12 +70,11 @@ public class MecanumDrive {
 
         // eg: Set the drive motor directions:
         // "Reverse" the motor that runs backwards when connected directly to the battery
-        motorFL.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors
-        motorFR.setDirection(DcMotor.Direction.REVERSE);// Set to FORWARD if using AndyMark motors
-        motorBL.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors
-        motorBR.setDirection(DcMotor.Direction.REVERSE);// Set to FORWARD if using AndyMark motors
-        DriveMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        DriveMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        motorFL.setDirection(DcMotor.Direction.REVERSE); // Set to REVERSE if using AndyMark motors
+        motorFR.setDirection(DcMotor.Direction.FORWARD);// Set to FORWARD if using AndyMark motors
+        motorBL.setDirection(DcMotor.Direction.REVERSE); // Set to REVERSE if using AndyMark motors
+        motorBR.setDirection(DcMotor.Direction.FORWARD);// Set to FORWARD if using AndyMark motors
+
     }
 
     public void initGyro(HardwareMap myHWMap) {
@@ -108,19 +97,11 @@ public class MecanumDrive {
     }
 
     public void initTele(HardwareMap myHWMap) {
+        initMotors(myHWMap);
+        //help me
 
         //Initialize wheel motors
-        motorFL = myHWMap.get(DcMotor.class, "motorFL");
-        motorFR = myHWMap.get(DcMotor.class, "motorFR");
-        motorBL = myHWMap.get(DcMotor.class, "motorBL");
-        motorBR = myHWMap.get(DcMotor.class, "motorBR");
 
-        // eg: Set the drive motor directions:
-        // "Reverse" the motor that runs backwards when connected directly to the battery
-        motorFL.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors
-        motorFR.setDirection(DcMotor.Direction.REVERSE);// Set to FORWARD if using AndyMark motors
-        motorBL.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors
-        motorBR.setDirection(DcMotor.Direction.REVERSE);// Set to FORWARD if using AndyMark motors
     }
 
     public void DriveMode(DcMotor.RunMode JoeMode) {
@@ -151,8 +132,8 @@ public class MecanumDrive {
 
         motorFL.setPower(v1*throttle);
         motorFR.setPower(v2*throttle);
-        motorBL.setPower(v3*throttle);
-        motorBR.setPower(v4*throttle);
+        motorBL.setPower(v3*throttle * JimtheMotorWeightDistrobutionHelpingNumber);
+        motorBR.setPower(v4*throttle * JimtheMotorWeightDistrobutionHelpingNumber);
     }
 
     //Method to stop all power to the wheel motors
