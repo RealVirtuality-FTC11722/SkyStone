@@ -100,7 +100,8 @@ public class DriverMode extends LinearOpMode {
 
             skyGary.Builda.LifterControl(
                     BotControls.LifterStick(this),
-                    BotControls.ClampButton(this)
+                    BotControls.ClosenoClampButton(this),
+                    BotControls.OpenoClampButton(this)
 
             );
 

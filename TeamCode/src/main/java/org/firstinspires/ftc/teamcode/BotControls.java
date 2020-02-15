@@ -43,7 +43,8 @@ public class BotControls {
 
     //Builder controls
     public static double  LifterStick(LinearOpMode op)              {return op.gamepad2.right_stick_y;}
-    public static double  ClampButton(LinearOpMode op)              {return op.gamepad2.right_trigger;}
+    public static boolean  ClosenoClampButton(LinearOpMode op)  {return op.gamepad2.right_bumper;}
+    public static boolean  OpenoClampButton(LinearOpMode op) {return op.gamepad2.left_bumper;}
     public static double  PlateStick(LinearOpMode op)               {return op.gamepad2.left_stick_y;}
     public static double  KickOutButton(LinearOpMode op)            {return op.gamepad2.left_trigger;}
 }

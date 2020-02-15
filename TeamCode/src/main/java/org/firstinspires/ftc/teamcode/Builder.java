@@ -66,9 +66,16 @@ public class Builder {
     }
 
 
-    public void LifterControl(double liftStick, double clampTrigger) {
+    public void LifterControl(double liftStick, boolean openJimboClampo, boolean closedJimboClampo) {
         liftUpDown.setPower(Range.clip(liftStick, -LIFTER_SPEED_MAX, LIFTER_SPEED_MAX));
-        liftClamp.setPosition(Range.clip(clampTrigger, CLAMP_OPEN, CLAMP_CLOSED));
+
+        if (closedJimboClampo) {
+            liftClamp.setPosition(CLAMP_CLOSED);
+        }
+
+        if (openJimboClampo) {
+            liftClamp.setPosition(CLAMP_OPEN);
+        }
     }
 
     public void LifterExpand(String state, OpMode op) {
