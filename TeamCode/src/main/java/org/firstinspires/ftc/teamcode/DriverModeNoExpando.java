@@ -94,12 +94,12 @@ public class DriverModeNoExpando extends LinearOpMode {
 
             skyGary.Builda.LifterControl(
                     BotControls.LifterStick(this),
-                    BotControls.ClampButton(this)
-
+                    BotControls.ClosenoClampButton(this),
+                    BotControls.OpenoClampButton(this)
             );
 
             //skyGary.Builda.MovePlate(BotControls.PlateStick(this) / 2);
-            skyGary.Builda.plateServo.setPower(gamepad2.left_stick_y*0.75);
+            skyGary.Builda.plateServo.setPower(BotControls.PlateStick(this)*0.75);
             telemetry.addData("FR Wheel: ", skyGary.Drive.motorFR.getPower());
             telemetry.addData("FL Wheel: ", skyGary.Drive.motorFL.getPower());
             telemetry.addData("BR Wheel: ", skyGary.Drive.motorBR.getPower());

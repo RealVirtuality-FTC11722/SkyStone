@@ -35,16 +35,16 @@ public class BotControls {
     //GAMEPAD 2
     //Collector controls
     public static boolean SpinnerInButton(LinearOpMode op)          {return  op.gamepad2.x;}
-    public static boolean SpinnerOutButton(LinearOpMode op)         {return  op.gamepad2.b;}
-    public static boolean SpinnerStopButton(LinearOpMode op)        {return  op.gamepad2.a;}
+    public static boolean SpinnerOutButton(LinearOpMode op)         {return  op.gamepad2.a;}
+    public static boolean SpinnerStopButton(LinearOpMode op)        {return  op.gamepad2.b;}
     public static boolean SideCollectorButton(LinearOpMode op)      {return  op.gamepad2.y;}
     public static boolean SideArmDownButton(LinearOpMode op)        {return  op.gamepad2.dpad_down;}
     public static boolean SideArmUpButton(LinearOpMode op)          {return  op.gamepad2.dpad_up;}
 
     //Builder controls
     public static double  LifterStick(LinearOpMode op)              {return op.gamepad2.right_stick_y;}
-    public static boolean  ClosenoClampButton(LinearOpMode op)  {return op.gamepad2.right_bumper;}
-    public static boolean  OpenoClampButton(LinearOpMode op) {return op.gamepad2.left_bumper;}
+    public static boolean  ClosenoClampButton(LinearOpMode op)      {return op.gamepad2.right_bumper;}
+    public static boolean  OpenoClampButton(LinearOpMode op)        {return op.gamepad2.left_bumper;}
     public static double  PlateStick(LinearOpMode op)               {return op.gamepad2.left_stick_y;}
     public static double  KickOutButton(LinearOpMode op)            {return op.gamepad2.left_trigger;}
 }

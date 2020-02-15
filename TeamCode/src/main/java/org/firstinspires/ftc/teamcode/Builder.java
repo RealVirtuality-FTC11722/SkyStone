@@ -56,21 +56,25 @@ public class Builder {
         liftUpDown.setDirection(DcMotorSimple.Direction.REVERSE);
         liftInOut.setDirection(DcMotorSimple.Direction.REVERSE);
         liftClamp.setDirection(Servo.Direction.FORWARD);
-        plateServo.setDirection(CRServo.Direction.REVERSE);
+        plateServo.setDirection(CRServo.Direction.FORWARD);
         FoundationGrabberA.setDirection(Servo.Direction.FORWARD);
         FoundationGrabberB.setDirection(Servo.Direction.REVERSE);
         kickOutServo.setDirection(Servo.Direction.REVERSE);
         liftInOut.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         liftInOut.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        plateServo.setPower(0);
     }
 
 
-    public void LifterControl(double liftStick, double clampTrigger) {
+    public void LifterControl(double liftStick, boolean openJimboClampo, boolean closedJimboClampo) {
         liftUpDown.setPower(Range.clip(liftStick, -LIFTER_SPEED_MAX, LIFTER_SPEED_MAX));
-        //liftClamp.setPosition(Range.clip(clampTrigger, CLAMP_OPEN, CLAMP_CLOSED));
 
-        
+        if (closedJimboClampo) {
+            liftClamp.setPosition(CLAMP_CLOSED);
+        }
+
+        if (openJimboClampo) {
+            liftClamp.setPosition(CLAMP_OPEN);
+        }
     }
 
     public void LifterExpand(String state, OpMode op) {

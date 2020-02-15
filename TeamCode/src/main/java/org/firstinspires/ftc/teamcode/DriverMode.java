@@ -70,6 +70,9 @@ public class DriverMode extends LinearOpMode {
                     BotControls.TurnStick(this),
                     BotControls.DriveThrottle(this)
             );
+            if (gamepad1.left_trigger > 0.5) {
+                skyGary.Drive.DriveForward(gamepad1.left_trigger*0.5);
+            }
 
             skyGary.Collecta.SpinnerControl(
                     BotControls.SpinnerOutButton(this),
@@ -106,7 +109,7 @@ public class DriverMode extends LinearOpMode {
             );
 
             //skyGary.Builda.MovePlate(BotControls.PlateStick(this) / 2);
-            skyGary.Builda.plateServo.setPower(gamepad2.left_stick_y*0.75);
+            skyGary.Builda.plateServo.setPower(BotControls.PlateStick(this)*0.75);
             telemetry.addData("FR Wheel: ", skyGary.Drive.motorFR.getPower());
             telemetry.addData("FL Wheel: ", skyGary.Drive.motorFL.getPower());
             telemetry.addData("BR Wheel: ", skyGary.Drive.motorBR.getPower());
