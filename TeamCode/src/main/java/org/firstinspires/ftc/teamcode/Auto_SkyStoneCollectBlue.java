@@ -88,7 +88,7 @@ public class Auto_SkyStoneCollectBlue extends LinearOpMode {
         //while (opModeIsActive()) {
 
             //Drive Right to Stones
-            skyGary.Drive.DriveLeftWithGyro(0.9, this, 2.0);
+            skyGary.Drive.DriveLeftWithGyro(0.9, this, 1.5);
             skyGary.Drive.DriveLeft(0.455721);
             loopStartTime = runtime.time();
             while (!(skyGary.mySensors.sensorDistance.getDistance(DistanceUnit.CM) < 8.5)

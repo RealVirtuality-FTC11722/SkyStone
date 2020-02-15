@@ -54,7 +54,7 @@ public class DriverMode extends LinearOpMode {
         runtime.reset();
 
         //skyGary.Builda.LifterExpand("out", this);
-        skyGary.Builda.liftInOut.setTargetPosition(2400);
+        skyGary.Builda.liftInOut.setTargetPosition(2600);
         skyGary.Builda.liftInOut.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         skyGary.Builda.liftInOut.setPower(0.5);
         skyGary.Collecta.RaiseArm();

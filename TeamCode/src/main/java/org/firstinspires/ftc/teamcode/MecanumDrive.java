@@ -21,7 +21,7 @@ public class MecanumDrive {
     public DcMotor motorBL = null;
     public DcMotor motorBR = null;
 
-    public double JimtheMotorWeightDistrobutionHelpingNumber = 0.88;
+    public double JimtheMotorWeightDistrobutionHelpingNumber = 1.0;
     public static double STEERING = 0.004;
     public static double Turn_Power = 0.15;
     double DRIVE_POWER_MAX_LOW = 0.4; //Minimum drive power without throttle
@@ -164,14 +164,14 @@ public class MecanumDrive {
         motorFR.setPower(power);
     }
     public void DriveLeftWithGyro(double power, LinearOpMode op, double time) {
-        DriveMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        DriveMode(DcMotor.RunMode.RUN_USING_ENCODER);
         ElapsedTime runtime = new ElapsedTime();
         runtime.reset();
-        DriveLeft( power / 2);
+        //DriveLeft( power / 2);
+        //op.sleep(500);
+        DriveLeft( power * 0.75);
         op.sleep(500);
-        DriveLeft( power / 1.5);
-        op.sleep(500);
-        DriveLeft( power);
+        DriveLeft(power);
         while (op.opModeIsActive() && runtime.time() < time) {
             op.telemetry.addData("Time: ", runtime.time());
             op.telemetry.update();
