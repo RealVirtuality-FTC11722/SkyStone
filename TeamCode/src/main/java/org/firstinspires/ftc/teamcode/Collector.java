@@ -44,9 +44,9 @@ public class Collector {
 
         // eg: Set the drive motor directions:
         // "Reverse" the motor that runs backwards when connected directly to the battery
-        SpinnerL.setDirection(DcMotorSimple.Direction.FORWARD);
-        SpinnerR.setDirection(DcMotorSimple.Direction.REVERSE);
-        pushInServo.setDirection(CRServo.Direction.FORWARD);
+        SpinnerL.setDirection(DcMotorSimple.Direction.REVERSE);
+        SpinnerR.setDirection(DcMotorSimple.Direction.FORWARD);
+        pushInServo.setDirection(CRServo.Direction.REVERSE);
         SpinnerL.setPower(0);
         SpinnerR.setPower(0);
         pushInServo.setPower(0);
@@ -70,7 +70,7 @@ public class Collector {
             SpinnerL.setPower(SPIT_OUT);
             SpinnerR.setPower(SPIT_OUT);
             if (!SIMPLE_MODE) {
-                pushInServo.setPower(0.75);
+                pushInServo.setPower(-0.75);
             } else {
                 pushInServo.setPower(0.0);
             }

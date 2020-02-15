@@ -11,9 +11,9 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * This file contains all the instructions for controlling the robot in Teleop mode.
  */
 
-@TeleOp(name="Driver Mode - Only", group="Linear OpMode")  // @Autonomous(...) is the other common choice
+@TeleOp(name="Driver Mode - No Expandos", group="Linear OpMode")  // @Autonomous(...) is the other common choice
 //@Disabled
-public class DriverMode extends LinearOpMode {
+public class DriverModeNoExpando extends LinearOpMode {
 
     /* Declare OpMode members. */
     private ElapsedTime runtime = new ElapsedTime();
@@ -53,12 +53,6 @@ public class DriverMode extends LinearOpMode {
         waitForStart();
         runtime.reset();
 
-        //skyGary.Builda.LifterExpand("out", this);
-        skyGary.Builda.liftInOut.setTargetPosition(2400);
-        skyGary.Builda.liftInOut.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        skyGary.Builda.liftInOut.setPower(0.5);
-        skyGary.Collecta.RaiseArm();
-
     // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
             telemetry.addData("Status", "Run Time: " + runtime.toString());
@@ -72,8 +66,8 @@ public class DriverMode extends LinearOpMode {
             );
 
             skyGary.Collecta.SpinnerControl(
-                    BotControls.SpinnerOutButton(this),
                     BotControls.SpinnerInButton(this),
+                    BotControls.SpinnerOutButton(this),
                     BotControls.SpinnerStopButton(this)
             );
 

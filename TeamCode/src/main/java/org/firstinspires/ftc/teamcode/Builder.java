@@ -56,7 +56,7 @@ public class Builder {
         liftUpDown.setDirection(DcMotorSimple.Direction.REVERSE);
         liftInOut.setDirection(DcMotorSimple.Direction.REVERSE);
         liftClamp.setDirection(Servo.Direction.FORWARD);
-        plateServo.setDirection(CRServo.Direction.FORWARD);
+        plateServo.setDirection(CRServo.Direction.REVERSE);
         FoundationGrabberA.setDirection(Servo.Direction.FORWARD);
         FoundationGrabberB.setDirection(Servo.Direction.REVERSE);
         kickOutServo.setDirection(Servo.Direction.REVERSE);
@@ -82,7 +82,7 @@ public class Builder {
     }
 
     public void MovePlate(double plateStick) {
-        plateServo.setPower(plateStick);
+        plateServo.setPower(plateStick*0.75);
     }
 
     public void GrabPlatform(boolean GrabButton) {
