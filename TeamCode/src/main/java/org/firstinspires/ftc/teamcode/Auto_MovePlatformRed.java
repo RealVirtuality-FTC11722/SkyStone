@@ -88,7 +88,7 @@ public class Auto_MovePlatformRed extends LinearOpMode {
         skyGary.Drive.DriveRight(0.5);
         loopStartTime = runtime.time();
         while (opModeIsActive() && runtime.time() < loopStartTime + 2) {
-            skyGary.Drive.KeepStraight();
+            skyGary.Drive.KeepStraight(0.0045);
         }
         skyGary.Drive.StopWheels();
         skyGary.Builda.GrabPlatform(false);

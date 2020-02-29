@@ -22,7 +22,7 @@ public class MecanumDrive {
     public DcMotor motorBR = null;
 
     public double JimtheMotorWeightDistrobutionHelpingNumber = 1.0;
-    public static double STEERING = 0.004;
+    //public static double STEERING = 0.0047000000000000000000000000000011722;
     public static double Turn_Power = 0.15;
     double DRIVE_POWER_MAX_LOW = 0.4; //Minimum drive power without throttle
     double TURN_POWER_MIN = 0.17; //Minumun turn power
@@ -149,7 +149,7 @@ public class MecanumDrive {
         }
     }
     public void DriveForward(double power) {
-        DriveMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        DriveMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motorBL.setPower(power);
         motorBR.setPower(power);
         motorFL.setPower(power);
@@ -157,7 +157,7 @@ public class MecanumDrive {
     }
 
     public void DriveLeft(double power) {
-        DriveMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        DriveMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motorBL.setPower(power);
         motorBR.setPower(-power);
         motorFL.setPower(-power);
@@ -175,11 +175,11 @@ public class MecanumDrive {
         while (op.opModeIsActive() && runtime.time() < time) {
             op.telemetry.addData("Time: ", runtime.time());
             op.telemetry.update();
-            KeepStraight();
+            KeepStraight(0.0045);
         }
     }
     public void DriveRightWithGyro(double power, LinearOpMode op, double time) {
-        DriveMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        DriveMode(DcMotor.RunMode.RUN_USING_ENCODER);
         ElapsedTime runtime = new ElapsedTime();
         runtime.reset();
         DriveRight( power / 2);
@@ -190,21 +190,21 @@ public class MecanumDrive {
         while (op.opModeIsActive() && runtime.time() < time) {
             op.telemetry.addData("Time: ", runtime.time());
             op.telemetry.update();
-            KeepStraight();
+            KeepStraight(0.0045);
         }
     }
 
-    public void KeepStraight() {
+    public void KeepStraight(double JimboTheSteerer) {
         if (imu.getAngularOrientation().firstAngle < 0){
-            SteerLeft();
+            SteerLeft(JimboTheSteerer);
         }
         if (imu.getAngularOrientation().firstAngle > 0) {
-            SteerRight();
+            SteerRight(JimboTheSteerer);
         }
     }
 
     public void DriveRight(double power) {
-        DriveMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        DriveMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motorBL.setPower(-power);
         motorBR.setPower(power);
         motorFL.setPower(power);
@@ -212,21 +212,21 @@ public class MecanumDrive {
     }
 
     public void DriveBackwards(double power) {
-        DriveMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        DriveMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motorBL.setPower(-power);
         motorBR.setPower(-power);
         motorFL.setPower(-power);
         motorFR.setPower(-power);
     }
 
-    public void SteerRight() {
+    public void SteerRight(double STEERING) {
         motorFL.setPower(Range.clip(motorFL.getPower() + STEERING, -1.0, 1.0) );
         motorBL.setPower(Range.clip(motorBL.getPower() + STEERING, -1.0, 1.0) );
         motorFR.setPower(Range.clip(motorFR.getPower() - STEERING, -1.0, 1.0) );
         motorBR.setPower(Range.clip(motorBR.getPower() - STEERING, -1.0, 1.0) );
     }
 
-    public void SteerLeft() {
+    public void SteerLeft(double STEERING) {
         motorFL.setPower(Range.clip(motorFL.getPower() - STEERING, -1.0, 1.0) );
         motorBL.setPower(Range.clip(motorBL.getPower() - STEERING, -1.0, 1.0) );
         motorFR.setPower(Range.clip(motorFR.getPower() + STEERING, -1.0, 1.0) );

@@ -88,12 +88,12 @@ public class Auto_SkyStoneCollectBlue extends LinearOpMode {
         //while (opModeIsActive()) {
 
             //Drive Right to Stones
-            skyGary.Drive.DriveLeftWithGyro(0.9, this, 1.5);
-            skyGary.Drive.DriveLeft(0.455721);
+            skyGary.Drive.DriveLeftWithGyro(0.67, this, 1.5);
+            skyGary.Drive.DriveLeft(0.1911722);
             loopStartTime = runtime.time();
             while (!(skyGary.mySensors.sensorDistance.getDistance(DistanceUnit.CM) < 8.5)
                     && opModeIsActive() && runtime.time() < loopStartTime + 5000) {
-                skyGary.Drive.KeepStraight();
+                skyGary.Drive.KeepStraight(0.0045);
                 telemetry.addData("Run Time: ", runtime.time());
                 telemetry.addData("Loop Time: ", runtime.time() - loopStartTime);
                 telemetry.addData("Distance (cm)",
@@ -103,11 +103,11 @@ public class Auto_SkyStoneCollectBlue extends LinearOpMode {
             skyGary.Drive.StopWheels();
             //skyGary.Drive.Turn(this, -skyGary.Drive.imu.getAngularOrientation().firstAngle, 5000);
         //Drive Backwards along Stones
-            skyGary.Drive.DriveForward(0.2);
+            skyGary.Drive.DriveForward(0.120324904375892);
             loopStartTime = runtime.time();
             while ((!(skyGary.mySensors.sensorColor.red() < 30) || !(skyGary.mySensors.sensorDistance.getDistance(DistanceUnit.CM) < 12))
                     && opModeIsActive() && runtime.time() < loopStartTime + 8000) {
-                skyGary.Drive.KeepStraight();
+                skyGary.Drive.KeepStraight(0.0045);
                 telemetry.addData("Run Time: ", runtime.time());
                 telemetry.addData("Loop Time: ", runtime.time() - loopStartTime);
                 telemetry.addData("Distance (cm)",
@@ -129,15 +129,19 @@ public class Auto_SkyStoneCollectBlue extends LinearOpMode {
             //Drive Left 6 inches
             skyGary.Drive.DriveRight(0.5);
             loopStartTime = runtime.time();
-            sleep(2000);
+            sleep(1000);
 //            while (opModeIsActive() && runtime.time() < loopStartTime + 501) {
 //                skyGary.Drive.KeepStraight();//           }
             skyGary.Drive.StopWheels();
             //Drive Backwards to build zone
-            skyGary.Drive.DriveBackwards(0.5);
+            skyGary.Drive.DriveBackwards(0.61);
             loopStartTime = runtime.time();
-            while (opModeIsActive() && runtime.time() < loopStartTime + 2) {
-                skyGary.Drive.KeepStraight();
+            while (opModeIsActive() && runtime.time() < 5 + loopStartTime) {
+                if (skyGary.mySensors.bridgeSensor.cmUltrasonic() < 50){
+                }
+            }
+            while (opModeIsActive() && runtime.time() < loopStartTime + 0.5) {
+                skyGary.Drive.KeepStraight(0.00490000000000);
             }
             skyGary.Drive.StopWheels();
 
@@ -150,7 +154,6 @@ public class Auto_SkyStoneCollectBlue extends LinearOpMode {
                 if (skyGary.mySensors.bridgeSensor.cmUltrasonic() < 50){
                     skyGary.Drive.StopWheels();
                 }
-
             }
             skyGary.Drive.StopWheels();
             //Drive Right to stones

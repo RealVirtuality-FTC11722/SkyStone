@@ -88,7 +88,7 @@ public class Auto_Test extends LinearOpMode {
         //}
         skyGary.Drive.DriveLeft(.5);
         while (opModeIsActive() && runtime.time() < 3) {
-            skyGary.Drive.KeepStraight();
+            skyGary.Drive.KeepStraight(0.0045);
             telemetry.update();
         }
         skyGary.Drive.StopWheels();
@@ -96,7 +96,7 @@ public class Auto_Test extends LinearOpMode {
 
         skyGary.Drive.DriveRight(.5);
         while (opModeIsActive() && runtime.time() < 2) {
-            skyGary.Drive.KeepStraight();
+            skyGary.Drive.KeepStraight(0.0045);
             telemetry.update();
         }
 
