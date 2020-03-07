@@ -149,7 +149,7 @@ public class Auto_SkyStoneCollectRed extends LinearOpMode {
                 skyGary.Drive.KeepStraight(0);
             }
             loopStartTime = runtime.time();
-            while (opModeIsActive() && runtime.time() < loopStartTime + 0.2) {
+            while (opModeIsActive() && runtime.time() < loopStartTime + 0.35) {
                 skyGary.Drive.KeepStraight(0);
             }
             skyGary.Drive.StopWheels();
