@@ -92,7 +92,7 @@ public class Auto_SkyStoneCollectRed extends LinearOpMode {
             skyGary.Drive.DriveLeft(0.1911722);
             loopStartTime = runtime.time();
             while (!(skyGary.mySensors.sensorDistance.getDistance(DistanceUnit.CM) < 8.5)
-                    && opModeIsActive() && runtime.time() < loopStartTime + 5000) {
+                    && opModeIsActive() && runtime.time() < loopStartTime + 0.65) {
                 skyGary.Drive.KeepStraight(0.0047);
                 telemetry.addData("Run Time: ", runtime.time());
                 telemetry.addData("Loop Time: ", runtime.time() - loopStartTime);
@@ -106,8 +106,14 @@ public class Auto_SkyStoneCollectRed extends LinearOpMode {
             skyGary.Drive.DriveBackwards(0.120324904375892);
             loopStartTime = runtime.time();
             while ((!(skyGary.mySensors.sensorColor.red() < 30) || !(skyGary.mySensors.sensorDistance.getDistance(DistanceUnit.CM) < 12))
-                    && opModeIsActive() && runtime.time() < loopStartTime + 8000) {
-                skyGary.Drive.KeepStraight(0.0042);
+                    && opModeIsActive() && runtime.time() < loopStartTime + 4) {
+                skyGary.Drive.KeepStraight(0);
+                if (skyGary.Drive.imu.getAngularOrientation().firstAngle < 0){
+                    telemetry.addData("Steer ", "Left");
+                }
+                if (skyGary.Drive.imu.getAngularOrientation().firstAngle > 0){
+                    telemetry.addData("Steer ", "Right");
+                }
                 telemetry.addData("Run Time: ", runtime.time());
                 telemetry.addData("Loop Time: ", runtime.time() - loopStartTime);
                 telemetry.addData("Distance (cm)",
@@ -137,8 +143,14 @@ public class Auto_SkyStoneCollectRed extends LinearOpMode {
             //Drive Backwards to build zone
             skyGary.Drive.DriveForward(0.61);
             loopStartTime = runtime.time();
-            while (opModeIsActive() && runtime.time() < loopStartTime + 2) {
-                skyGary.Drive.KeepStraight(0.0049000000000000);
+            while (opModeIsActive()
+                    && runtime.time() < 2.8 + loopStartTime
+                    && skyGary.mySensors.bridgeSensor.cmUltrasonic() > 50) {
+                skyGary.Drive.KeepStraight(0);
+            }
+            loopStartTime = runtime.time();
+            while (opModeIsActive() && runtime.time() < loopStartTime + 0.2) {
+                skyGary.Drive.KeepStraight(0);
             }
             skyGary.Drive.StopWheels();
 
@@ -147,7 +159,7 @@ public class Auto_SkyStoneCollectRed extends LinearOpMode {
             //Drive Forward to next Skystone
             skyGary.Drive.DriveBackwards(0.500000000456456);
             loopStartTime = runtime.time();
-            while (opModeIsActive() && runtime.time() < 2 + loopStartTime) {
+            while (opModeIsActive() && runtime.time() < 1 + loopStartTime) {
                 if (skyGary.mySensors.bridgeSensor.cmUltrasonic() < 50){
                     skyGary.Drive.StopWheels();
                 }
